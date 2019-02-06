@@ -1,0 +1,14 @@
+@startuml{super-simple-class.png}
+title スーパーシンプルクラス図
+
+class User {
+  id
+  email
+  crypted_password
+  activated_at
+  suspended_at
+  banned_at
+  deactivated_at
+}
+
+@enduml
