@@ -2,27 +2,13 @@
 @startuml{state.png}
 title User状態遷移図
 
-' [*] が開始状態 or 終了状態を表す
-' [*] が含まれているとPlantUMLが状態マシン図と判断する
 [*] -down-> registered
-
-'  スーパー状態
-state activated {
-  not_authenticated --> authentication_requested : 認証リクエスト
-  authentication_requested --> authenticated : リクエスト承認
-  authentication_requested --> not_authenticated : リクエスト棄却
-}
-
-' PlantUMLの状態マシン図記法で遷移を書く場合は
-' かならず --> の方向に遷移を書かなければならない。
-registered -right-> not_authenticated : 詳細登録により正式に登録完了
-activated --> suspended : 運営により凍結される
-suspended --> activated : 凍結解除
-suspended --> banned : 運営によりBANされる
-suspended --> closed : ユーザが退会する
-activated --> banned : 運営によりBANされる
-activated --> closed : ユーザが退会する
-banned --> [*] : BANは不可逆のため終了状態
-closed --> [*] : 退会は不可逆のため終了状態
+registered -right-> activated : 正式に登録する
+activated --> suspended : 凍結される
+suspended --> activated : 凍結解除される
+suspended --> banned : BANされる
+suspended --> deactivated : 退会する
+activated --> banned : BANされる
+activated --> deactivated : 退会する
 
 @enduml
