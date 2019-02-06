@@ -10,7 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_06_032720) do
+ActiveRecord::Schema.define(version: 2019_02_06_070726) do
+
+  create_table "user_authentication_requests", force: :cascade do |t|
+    t.string "id_image"
+    t.datetime "rejected_at"
+    t.datetime "authenticated_at"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_authentication_requests_on_user_id"
+  end
+
+  create_table "user_bans", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_bans_on_user_id"
+  end
+
+  create_table "user_closes", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_closes_on_user_id"
+  end
+
+  create_table "user_details", force: :cascade do |t|
+    t.string "phone_number"
+    t.string "name"
+    t.date "birthday"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_details_on_user_id"
+  end
+
+  create_table "user_suspensions", force: :cascade do |t|
+    t.datetime "removed_at"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_suspensions_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
