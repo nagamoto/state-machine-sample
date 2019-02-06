@@ -7,18 +7,8 @@ class User {
   crypted_password
 }
 
-class UserDetail {
+class UserActivation {
   user_id
-  phone_number
-  name
-  birthday
-}
-
-class UserAuthenticationRequest {
-  user_id
-  id_image
-  rejected_at
-  authenticated_at
 }
 
 class UserSuspension {
@@ -30,14 +20,13 @@ class UserBan {
   user_id
 }
 
-class UserClose {
+class UserDeactivation {
   user_id
 }
 
-User "1" - "0..1" UserDetail
-User "1" - "*" UserAuthenticationRequest
+User "1" - "0..1" UserActivation
 User "1" - "*" UserSuspension
 User "1" - "0..1" UserBan
-User "1" - "0..1" UserClose
+User "1" - "0..1" UserDeactivation
 
 @enduml
