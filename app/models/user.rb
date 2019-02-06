@@ -6,7 +6,6 @@ class User < ApplicationRecord
   has_many :suspensions, class_name: 'UserSuspension'
   has_many :authentication_requests, class_name: 'UserAuthenticationRequest'
 
-
   def status
     return 'activated' if activated?
     return 'suspended' if suspended?
@@ -43,5 +42,21 @@ class User < ApplicationRecord
 
   def closed?
     ban.present?
+  end
+
+  def activate!
+    create_detail!
+  end
+
+  def suspend!
+    suspensions.create!
+  end
+
+  def ban!
+    create_ban!
+  end
+
+  def close!
+    create_close!
   end
 end
