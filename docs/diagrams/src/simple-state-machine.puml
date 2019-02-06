@@ -1,0 +1,13 @@
+' userの状態遷移図
+@startuml{simple-state-machine.png}
+title シンプルUser状態遷移図
+
+[*] --> registered : 登録する
+registered --> activated : 正式に登録する
+activated --> suspended : 凍結される
+suspended --> banned : BANされる
+suspended --> deactivated : 退会する
+activated --> banned : BANされる
+activated --> deactivated : 退会する
+
+@enduml
