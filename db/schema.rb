@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_06_070726) do
+ActiveRecord::Schema.define(version: 2019_02_06_085833) do
+
+  create_table "user_activations", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_activations_on_user_id"
+  end
 
   create_table "user_authentication_requests", force: :cascade do |t|
     t.string "id_image"
@@ -34,6 +41,13 @@ ActiveRecord::Schema.define(version: 2019_02_06_070726) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_user_closes_on_user_id"
+  end
+
+  create_table "user_deactivations", force: :cascade do |t|
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_user_deactivations_on_user_id"
   end
 
   create_table "user_details", force: :cascade do |t|
