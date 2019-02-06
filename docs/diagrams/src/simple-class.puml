@@ -1,0 +1,31 @@
+@startuml{simple-class.png}
+title シンプルクラス図
+
+class User {
+  id
+  email
+  crypted_password
+}
+
+class UserActivation {
+  user_id
+}
+
+class UserSuspension {
+  user_id
+}
+
+class UserBan {
+  user_id
+}
+
+class UserDeactivation {
+  user_id
+}
+
+User "1" - "0..1" UserActivation
+User "1" - "0..1" UserSuspension
+User "1" - "0..1" UserBan
+User "1" - "0..1" UserDeactivation
+
+@enduml
