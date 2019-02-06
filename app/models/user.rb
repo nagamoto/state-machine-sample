@@ -1,35 +1,22 @@
 class User < ApplicationRecord
-  has_one :detail, class_name: 'UserDetail'
-  has_one :close, class_name: 'UserClose'
+  has_one :activation, class_name: 'UserActivation'
+  has_one :deactivation, class_name: 'UserDeactivation'
   has_one :ban, class_name: 'UserBan'
 
   has_many :suspensions, class_name: 'UserSuspension'
-  has_many :authentication_requests, class_name: 'UserAuthenticationRequest'
 
   def status
-    return 'activated' if activated?
+    return 'active' if active?
     return 'suspended' if suspended?
     return 'banned' if banned?
-    return 'closed' if closed?
+    return 'deactive' if deactive?
     return 'registered'
   end
 
-  def activated?
-    return false unless detail.present?
-    return false if suspended? || banned? || closed?
+  def active?
+    return false unless activation.present?
+    return false if suspended? || banned? || deactive?
     true
-  end
-
-  def not_authenticated?
-    !authenticated?
-  end
-
-  def authentication_requested?
-    authentication_requests.exists?
-  end
-
-  def authenticated?
-    authentication_requests.where.not(authenticated_at: nil).exists?
   end
 
   def suspended?
@@ -40,12 +27,12 @@ class User < ApplicationRecord
     ban.present?
   end
 
-  def closed?
-    ban.present?
+  def deactive?
+    deactivation.present?
   end
 
   def activate!
-    create_detail!
+    create_activation!
   end
 
   def suspend!
@@ -56,7 +43,7 @@ class User < ApplicationRecord
     create_ban!
   end
 
-  def close!
-    create_close!
+  def deactivate!
+    create_deactivation!
   end
 end
