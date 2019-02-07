@@ -1,62 +1,57 @@
 class User < ApplicationRecord
   include AASM
 
-  aasm do
-  end
   has_one :activation, class_name: 'UserActivation'
   has_one :deactivation, class_name: 'UserDeactivation'
   has_one :ban, class_name: 'UserBan'
+  has_one :active_suspension, lambda { where(removed_at: nil) }, class_name: 'UserSuspension'
 
   has_many :suspensions, class_name: 'UserSuspension'
 
-  def status
-    return 'active' if active?
-    return 'suspended' if suspended?
-    return 'banned' if banned?
-    return 'inactive' if inactive?
-    return 'registered'
+  aasm do
+    state :registered, :initial => true
+    state :active, :suspended, :banned, :inactive
+
+    # after内でのError発生時のロールバックは実装していない
+
+    event :activate do
+      transitions from: :registered, to: :active, guard: :build_activation
+      after do
+        create_activation!
+      end
+    end
+
+    event :suspend do
+      transitions from: :active, to: :suspended, guard: :without_active_suspension?
+      after do
+        suspensions.create!
+      end
+    end
+
+    event :unsuspend do
+      transitions from: :suspended, to: :active, guard: :active_suspension
+      after do
+        active_suspension.update!(removed_at: Time.current)
+      end
+    end
+
+    event :ban do
+      transitions from: [:active, :suspended], to: :banned, guard: :build_ban
+      after do
+        create_ban!
+      end
+    end
+
+    event :deactivate do
+      transitions from: [:active, :suspended], to: :inactive, guard: :build_deactivation
+      after do
+        create_deactivation!
+      end
+    end
   end
 
-  def registered?
-    return false if suspended? || banned? || inactive? || active?
+  def without_active_suspension?
+    return false if active_suspension
     true
-  end
-
-  def active?
-    return false if suspended? || banned? || inactive?
-    return false unless activation.present?
-    true
-  end
-
-  def suspended?
-    suspensions.where(removed_at: nil).exists?
-  end
-
-  def banned?
-    ban.present?
-  end
-
-  def inactive?
-    deactivation.present?
-  end
-
-  def activate!
-    raise StandardError unless registered? # 理想は独自例外
-    create_activation!
-  end
-
-  def suspend!
-    raise StandardError unless active? # 理想は独自例外
-    suspensions.create!
-  end
-
-  def ban!
-    raise StandardError unless active? # 理想は独自例外
-    create_ban!
-  end
-
-  def deactivate!
-    raise StandardError unless active? # 理想は独自例外
-    create_deactivation!
   end
 end
