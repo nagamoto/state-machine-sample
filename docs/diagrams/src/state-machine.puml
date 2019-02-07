@@ -2,13 +2,13 @@
 @startuml{state.png}
 title User状態遷移図
 
-[*] -down-> registered
-registered -right-> activated : 正式に登録する
-activated --> suspended : 凍結される
-suspended --> activated : 凍結解除される
+[*] --> registered
+registered --> active : 正式に登録する
+active --> suspended : 凍結される
+suspended --> active : 凍結解除される
 suspended --> banned : BANされる
-suspended --> deactivated : 退会する
-activated --> banned : BANされる
-activated --> deactivated : 退会する
+suspended --> inactive : 退会する
+active --> banned : BANされる
+active --> inactive : 退会する
 
 @enduml
