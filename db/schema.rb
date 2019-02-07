@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_06_085833) do
+ActiveRecord::Schema.define(version: 2019_02_07_075533) do
 
   create_table "user_activations", force: :cascade do |t|
     t.integer "user_id"
@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2019_02_06_085833) do
     t.string "crypted_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "aasm_state"
   end
 
 end
