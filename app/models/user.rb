@@ -9,7 +9,7 @@ class User < ApplicationRecord
     return 'active' if active?
     return 'suspended' if suspended?
     return 'banned' if banned?
-    return 'deactive' if deactive?
+    return 'inactive' if inactive?
     return 'registered'
   end
 
@@ -27,7 +27,7 @@ class User < ApplicationRecord
     ban.present?
   end
 
-  def deactive?
+  def inactive?
     deactivation.present?
   end
 
