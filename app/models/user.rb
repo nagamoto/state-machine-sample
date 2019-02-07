@@ -3,22 +3,29 @@ class User < ApplicationRecord
   has_one :deactivation, class_name: 'UserDeactivation'
   has_one :ban, class_name: 'UserBan'
 
+  has_many :suspensions, class_name: 'UserSuspension'
+
   def status
     return 'active' if active?
+    return 'suspended' if suspended?
     return 'banned' if banned?
     return 'inactive' if inactive?
     return 'registered'
   end
 
   def registered?
-    return false if banned? || inactive? || active?
+    return false if suspended? || banned? || inactive? || active?
     true
   end
 
   def active?
-    return false if banned? || inactive?
+    return false if suspended? || banned? || inactive?
     return false unless activation.present?
     true
+  end
+
+  def suspended?
+    suspensions.where(removed_at: nil).exists?
   end
 
   def banned?
@@ -32,6 +39,11 @@ class User < ApplicationRecord
   def activate!
     raise StandardError unless registered? # 理想は独自例外
     create_activation!
+  end
+
+  def suspend!
+    raise StandardError unless active? # 理想は独自例外
+    suspensions.create!
   end
 
   def ban!
