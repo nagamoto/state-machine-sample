@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  include AASM
+
+  aasm do
+  end
   has_one :activation, class_name: 'UserActivation'
   has_one :deactivation, class_name: 'UserDeactivation'
   has_one :ban, class_name: 'UserBan'
