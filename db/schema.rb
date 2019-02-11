@@ -10,7 +10,43 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_07_075533) do
+ActiveRecord::Schema.define(version: 2019_02_11_144629) do
+
+  create_table "account_activations", force: :cascade do |t|
+    t.integer "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_activations_on_account_id"
+  end
+
+  create_table "account_bans", force: :cascade do |t|
+    t.integer "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_bans_on_account_id"
+  end
+
+  create_table "account_deactivations", force: :cascade do |t|
+    t.integer "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_deactivations_on_account_id"
+  end
+
+  create_table "account_suspensions", force: :cascade do |t|
+    t.datetime "removed_at"
+    t.integer "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_account_suspensions_on_account_id"
+  end
+
+  create_table "accounts", force: :cascade do |t|
+    t.string "email"
+    t.string "crypted_password"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "user_activations", force: :cascade do |t|
     t.integer "user_id"
