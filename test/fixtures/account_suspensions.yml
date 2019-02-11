@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  removed_at: 2019-02-11 23:46:29
+  account: one
+
+two:
+  removed_at: 2019-02-11 23:46:29
+  account: two
