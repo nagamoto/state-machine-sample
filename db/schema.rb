@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_11_144629) do
+ActiveRecord::Schema.define(version: 2019_02_11_150628) do
 
   create_table "account_activations", force: :cascade do |t|
     t.integer "account_id"
@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(version: 2019_02_11_144629) do
     t.string "crypted_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "status", default: 0
+    t.index ["status"], name: "index_accounts_on_status"
   end
 
   create_table "user_activations", force: :cascade do |t|
