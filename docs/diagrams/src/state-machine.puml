@@ -3,7 +3,7 @@
 title User状態遷移図
 
 [*] --> registered
-registered --> active : 正式に登録する
+registered -right-> active : 正式に登録する
 active --> suspended : 凍結される
 suspended --> active : 凍結解除される
 suspended --> banned : BANされる

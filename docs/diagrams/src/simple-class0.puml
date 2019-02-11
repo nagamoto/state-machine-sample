@@ -12,10 +12,6 @@ class UserActivation {
   user_id
 }
 
-class UserSuspension {
-  user_id
-}
-
 class UserBan {
   user_id
 }
@@ -25,7 +21,6 @@ class UserDeactivation {
 }
 
 User "1" - "0..1" UserActivation
-User "1" - "0..1" UserSuspension
 User "1" - "0..1" UserBan
 User "1" - "0..1" UserDeactivation
 
