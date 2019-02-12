@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2019_02_11_150628) do
     t.string "crypted_password"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "status", default: 0
+    t.integer "status", default: 0, null: false
     t.index ["status"], name: "index_accounts_on_status"
   end
 
