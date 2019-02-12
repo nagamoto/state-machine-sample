@@ -1,0 +1,14 @@
+' accountの状態遷移図
+@startuml{state.png}
+title Account状態遷移図
+
+[*] --> registered
+registered -right-> active : 正式に登録する
+active --> suspended : 凍結される
+suspended --> active : 凍結解除される
+suspended --> banned : BANされる
+suspended --> inactive : 退会する
+active --> banned : BANされる
+active --> inactive : 退会する
+
+@enduml

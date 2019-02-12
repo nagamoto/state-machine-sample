@@ -1,0 +1,33 @@
+@startuml{class.png}
+title Account関連クラス図
+
+class Account {
+  id
+  email
+  crypted_password
+  status
+}
+
+class AccountActivation {
+  account_id
+}
+
+class AccountSuspension {
+  account_id
+  removed_at
+}
+
+class AccountBan {
+  account_id
+}
+
+class AccountDeactivation {
+  account_id
+}
+
+Account "1" - "0..1" AccountActivation
+Account "1" - "*" AccountSuspension
+Account "1" - "0..1" AccountBan
+Account "1" - "0..1" AccountDeactivation
+
+@enduml
